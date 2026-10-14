@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Shift: Chennai, Tamil Nadu — Pre-Monsoon Thermal Analysis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- GSAP for Smooth UI Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Cinematic Multi-Wallpaper Slideshow Background */
+        .bg-slide {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out, transform 6s ease-out;
+            transform: scale(1.02);
+        }
+        .bg-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: linear-gradient(135deg, rgba(2, 6, 23, 0.82) 0%, rgba(15, 23, 42, 0.90) 100%);
+            backdrop-filter: blur(2px);
+        }
+
+        .anim-tab.active {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: rgba(56, 189, 248, 0.8);
+            color: #38bdf8;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        /* Enhanced SVG Vector Animation Keyframes */
+        @keyframes driftCloud {
+            0% { transform: translateX(-8px); }
+            50% { transform: translateX(12px); }
+            100% { transform: translateX(-8px); }
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.5)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.9)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.5)); }
+        }
+        @keyframes waveMotion {
+            0% { transform: translateY(0px) scaleY(1); }
+            50% { transform: translateY(-5px) scaleY(1.05); }
+            100% { transform: translateY(0px) scaleY(1); }
+        }
+        @keyframes heatRadiation {
+            0% { transform: translateY(0px); opacity: 0.2; }
+            50% { transform: translateY(-10px); opacity: 0.9; }
+            100% { transform: translateY(0px); opacity: 0.2; }
+        }
+        @keyframes domePulse {
+            0% { opacity: 0.4; transform: scale(0.98); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+            100% { opacity: 0.4; transform: scale(0.98); }
+        }
+
+        .svg-cloud { animation: driftCloud 5s infinite ease-in-out; }
+        .svg-sun { animation: pulseGlow 3.5s infinite ease-in-out; transform-origin: center; }
+        .svg-wave { animation: waveSea 3s infinite ease-in-out; transform-origin: bottom; }
+        .svg-heat { animation: heatRadiation 2.2s infinite ease-in-out; }
+        .svg-dome { animation: domePulse 3s infinite ease-in-out; transform-origin: center; }
+    </style>
+</head>
+<body class="bg-transparent text-slate-100 min-h-screen flex flex-col items-center py-12 px-4 selection:bg-blue-500 selection:text-white relative overflow-x-hidden">
+
+    <!-- Cinematic Multi-Wallpaper Slideshow Background Layers -->
+    <!-- 1. Dramatic Storm Clouds -->
+    <div class="bg-slide active" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=2000&q=80')"></div>
+    <!-- 2. Ocean Waves & Coast -->
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80')"></div>
+    <!-- 3. Moody Atmospheric Sky -->
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2000&q=80')"></div>
+    <!-- 4. Sunlit Horizon Over Water -->
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1498084393753-b411b2d26b34?auto=format&fit=crop&w=2000&q=80')"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="w-full max-w-5xl space-y-14 relative z-10">
+        
+        <!-- Animated Hero Header -->
+        <header id="hero-header" class="border-b border-slate-700/60 pb-8 opacity-0">
+            <span class="text-xs font-bold tracking-widest text-blue-300 uppercase bg-blue-500/20 px-3 py-1 rounded-full border border-blue-400/30">Independent Student Research Project</span>
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mt-3">Heat Shift</h1>
+            <p class="text-blue-200 text-xl font-medium mt-2">Chennai, Tamil Nadu — Pre-Monsoon Thermal Analysis</p>
+        </header>
+
+        <!-- SECTION 1: The Reasons Behind the Heat Shift (Interactive Vector Animations) -->
+        <section id="explanation-section" class="bg-slate-900/85 backdrop-blur-xl border border-slate-700/70 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 opacity-0">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">The Reasons Behind the Heat Shift</h2>
+                <p class="text-sm text-slate-300 mt-1">Click the tabs below to explore interactive visual animations explaining why October temperatures are spiking.</p>
+            </div>
+
+            <!-- Selection Tabs -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button onclick="switchVectorAnim(0)" id="tab-0" class="anim-tab active cursor-pointer bg-slate-950/60 border border-slate-800 p-3 sm:p-4 rounded-2xl text-center transition hover:border-blue-500/40">
+                    <span class="text-sm font-bold text-white block">Monsoon Delay</span>
+                </button>
+                <button onclick="switchVectorAnim(1)" id="tab-1" class="anim-tab cursor-pointer bg-slate-950/60 border border-slate-800 p-3 sm:p-4 rounded-2xl text-center transition hover:border-blue-500/40">
+                    <span class="text-sm font-bold text-white block">Ocean Warming</span>
+                </button>
+                <button onclick="switchVectorAnim(2)" id="tab-2" class="anim-tab cursor-pointer bg-slate-950/60 border border-slate-800 p-3 sm:p-4 rounded-2xl text-center transition hover:border-blue-500/40">
+                    <span class="text-sm font-bold text-white block">Urban Heat Island</span>
+                </button>
+                <button onclick="switchVectorAnim(3)" id="tab-3" class="anim-tab cursor-pointer bg-slate-950/60 border border-slate-800 p-3 sm:p-4 rounded-2xl text-center transition hover:border-blue-500/40">
+                    <span class="text-sm font-bold text-white block">Humidity Trap</span>
+                </button>
+            </div>
+
+            <!-- Dynamic SVG Vector Animation Stage -->
+            <div class="bg-slate-950/90 border border-blue-900/40 rounded-2xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-xl">
+                
+                <!-- SVG Visual Stage -->
+                <div class="bg-slate-900/90 border border-blue-500/40 rounded-2xl h-52 flex items-center justify-center relative overflow-hidden shadow-inner p-4">
+                    <div id="svg-stage" class="w-full h-full flex items-center justify-center">
+                        <!-- Default SVG: Monsoon Delay -->
+                        <svg viewBox="0 0 200 140" class="w-full h-full drop-shadow-lg">
+                            <circle cx="55" cy="45" r="20" fill="#f59e0b" class="svg-sun" />
+                            <path d="M110 55 C90 55 80 35 100 25 C110 5 140 15 150 35 C170 35 170 65 150 65 Z" fill="#94a3b8" class="svg-cloud" />
+                            <rect x="80" y="20" width="8" height="70" rx="4" fill="#ef4444" />
+                            <text x="48" y="118" fill="#38bdf8" font-size="11" font-weight="bold">High-Pressure Block</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <h3 id="anim-title" class="text-2xl font-bold text-white">Delayed Monsoon Winds</h3>
+                    <div class="flex gap-6 text-xs font-bold uppercase tracking-wider bg-blue-950/40 border border-blue-900/50 px-4 py-2.5 rounded-xl">
+                        <div><span class="text-slate-400 block font-normal">10 Years Ago</span><span class="text-slate-200 text-sm">Prompt Cooling Rains</span></div>
+                        <div class="border-l border-blue-900/60 pl-6"><span class="text-blue-400 block font-normal">Today</span><span class="text-blue-300 text-sm" id="today-phrase">Stalled Air & Baking Sun</span></div>
+                    </div>
+                    <p id="anim-desc" class="text-sm text-slate-300 leading-relaxed">
+                        Instead of timely easterly winds bringing October rain clouds, atmospheric blocks stall weather patterns, keeping the skies clear and baking the city.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Full October Temperature Graph -->
+        <section id="graph-section" class="bg-slate-900/85 backdrop-blur-xl border border-slate-700/70 rounded-3xl p-8 sm:p-10 shadow-2xl opacity-0">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white tracking-tight">Full October Temperature Trend (Oct 1 – Oct 31)</h2>
+                    <p class="text-xs text-slate-300 mt-1">Comparing daily 2026 Chennai temperatures against the 10-year historical average (°C).</p>
+                </div>
+                <div class="flex gap-2 text-xs">
+                    <button onclick="updateChart('all')" class="bg-slate-800 hover:bg-slate-700 text-slate-100 px-4 py-2 rounded-xl transition cursor-pointer border border-slate-700 whitespace-nowrap">Full Month View</button>
+                    <button onclick="updateChart('peak')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-semibold transition cursor-pointer shadow-lg shadow-blue-600/40 whitespace-nowrap">Highlight Peak Spike</button>
+                </div>
+            </div>
+            
+            <div class="h-96 w-full relative">
+                <canvas id="tempChart"></canvas>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Comparative Environmental Indicators -->
+        <section id="metrics-section" class="space-y-4 opacity-0">
+            <h2 class="text-xl font-bold text-white tracking-tight">Comparative Environmental Indicators</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="metric-card bg-slate-900/90 border border-slate-700 rounded-2xl p-6 shadow-xl border-t-2 border-t-blue-400">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Average Temperature</span>
+                    <div class="mt-3 space-y-1">
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-slate-400">10-Yr Avg:</span><span class="text-lg font-bold text-slate-300">29.2°C</span></div>
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-blue-300 font-semibold">Today:</span><span class="text-2xl font-extrabold text-blue-400">33.7°C</span></div>
+                    </div>
+                </div>
+
+                <div class="metric-card bg-slate-900/90 border border-slate-700 rounded-2xl p-6 shadow-xl border-t-2 border-t-blue-400">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Relative Humidity</span>
+                    <div class="mt-3 space-y-1">
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-slate-400">10-Yr Avg:</span><span class="text-lg font-bold text-slate-300">65%</span></div>
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-blue-300 font-semibold">Today:</span><span class="text-2xl font-extrabold text-white">78%</span></div>
+                    </div>
+                </div>
+
+                <div class="metric-card bg-slate-900/90 border border-slate-700 rounded-2xl p-6 shadow-xl border-t-2 border-t-blue-400">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Wind Vector</span>
+                    <div class="mt-3 space-y-1">
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-slate-400">10-Yr Avg:</span><span class="text-sm font-bold text-slate-300">8.5 kt (East)</span></div>
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-blue-300 font-semibold">Today:</span><span class="text-sm font-extrabold text-white">4.2 kt (Stalled)</span></div>
+                    </div>
+                </div>
+
+                <div class="metric-card bg-slate-900/90 border border-slate-700 rounded-2xl p-6 shadow-xl border-t-2 border-t-blue-400">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Barometric Pressure</span>
+                    <div class="mt-3 space-y-1">
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-slate-400">10-Yr Avg:</span><span class="text-lg font-bold text-slate-300">1009 hPa</span></div>
+                        <div class="flex justify-between items-baseline"><span class="text-xs text-blue-300 font-semibold">Today:</span><span class="text-2xl font-extrabold text-white">1012 hPa</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clean Footer (No GitHub link column) -->
+        <footer class="bg-slate-900/70 border border-slate-700/60 rounded-2xl p-6 text-sm text-slate-300 text-center backdrop-blur-md">
+            <strong class="text-white block mb-1">Heat Shift — Chennai, Tamil Nadu</strong>
+            Independent Student Climate Research Portfolio Project.
+        </footer>
+
+    </div>
+
+    <!-- JavaScript Execution Scripts -->
+    <script>
+        // Cinematic Wallpaper Slideshow Script (Changes background every 6 seconds)
+        const slides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 6000);
+
+        // High-End Vector SVG Animations Data
+        const vectorAnims = [
+            {
+                title: "Delayed Monsoon Winds",
+                todayPhrase: "Stalled Air & Baking Sun",
+                desc: "Instead of timely easterly winds bringing October rain clouds, atmospheric blocks stall weather patterns, keeping skies clear and baking the city.",
+                svg: `<svg viewBox="0 0 200 140" class="w-full h-full drop-shadow-lg">
+                        <circle cx="55" cy="45" r="20" fill="#f59e0b" class="svg-sun" />
+                        <path d="M110 55 C90 55 80 35 100 25 C110 5 140 15 150 35 C170 35 170 65 150 65 Z" fill="#94a3b8" class="svg-cloud" />
+                        <rect x="80" y="20" width="8" height="70" rx="4" fill="#ef4444" />
+                        <text x="48" y="118" fill="#38bdf8" font-size="11" font-weight="bold">High-Pressure Block</text>
+                      </svg>`
+            },
+            {
+                title: "Bay of Bengal Warming",
+                todayPhrase: "Intense Marine Heat Plumes",
+                desc: "Higher water temperatures across the western Bay of Bengal pump warm, high-moisture air directly onto the coast without cooling relief.",
+                svg: `<svg viewBox="0 0 200 140" class="w-full h-full drop-shadow-lg">
+                        <path d="M10 95 Q 50 75, 100 95 T 190 95 L 190 130 L 10 130 Z" fill="#3b82f6" opacity="0.6" />
+                        <path d="M10 110 Q 50 90, 100 110 T 190 110 L 190 130 L 10 130 Z" fill="#60a5fa" opacity="0.9" />
+                        <path d="M40 50 Q 50 30, 60 50" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" class="svg-heat" />
+                        <path d="M100 40 Q 110 20, 120 40" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" class="svg-heat" />
+                        <text x="35" y="75" fill="#f8fafc" font-size="12" font-weight="bold">🔥 Marine Heat Plumes</text>
+                      </svg>`
+            },
+            {
+                title: "Urban Heat Island Effect",
+                todayPhrase: "Asphalt & Concrete Traps",
+                desc: "Massive concrete and asphalt expansion absorbs solar radiation all day and continuously re-radiates trapped heat through the night.",
+                svg: `<svg viewBox="0 0 200 140" class="w-full h-full drop-shadow-lg">
+                        <rect x="35" y="60" width="35" height="70" fill="#475569" rx="3" />
+                        <rect x="85" y="35" width="50" height="95" fill="#334155" rx="3" />
+                        <path d="M25 45 Q 50 15, 75 45" fill="none" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round" class="svg-heat" />
+                        <path d="M75 25 Q 100 -5, 125 25" fill="none" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round" class="svg-heat" />
+                        <text x="42" y="120" fill="#f8fafc" font-size="10" font-weight="bold">Concrete & Asphalt</text>
+                      </svg>`
+            },
+            {
+                title: "Coastal Humidity Domes",
+                todayPhrase: "Suffocating Humidity Dome",
+                desc: "Stagnant high-pressure cells lock a thick blanket of moisture over the city, preventing human sweat evaporation and inflating real-feel heat.",
+                svg: `<svg viewBox="0 0 200 140" class="w-full h-full drop-shadow-lg">
+                        <ellipse cx="100" cy="85" rx="72" ry="42" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,4" class="svg-dome" />
+                        <text x="50" y="72" fill="#38bdf8" font-size="11" font-weight="bold">💧 Trapped Moisture</text>
+                        <circle cx="100" cy="110" r="8" fill="#f59e0b" />
+                        <text x="65" y="132" fill="#cbd5e1" font-size="10">Human Heat Stress</text>
+                      </svg>`
+            }
+        ];
+
+        function switchVectorAnim(index) {
+            document.querySelectorAll('.anim-tab').forEach((tab, i) => {
+                if(i === index) tab.classList.add('active');
+                else tab.classList.remove('active');
+            });
+            const data = vectorAnims[index];
+            document.getElementById('anim-title').innerText = data.title;
+            document.getElementById('today-phrase').innerText = data.todayPhrase;
+            document.getElementById('anim-desc').innerText = data.desc;
+            document.getElementById('svg-stage').innerHTML = data.svg;
+        }
+
+        // GSAP Scroll Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to("#hero-header", { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
+        gsap.to("#explanation-section", { opacity: 1, y: 0, duration: 1.2, delay: 0.2, ease: "power3.out" });
+        gsap.to("#graph-section", { opacity: 1, y: 0, duration: 1.2, delay: 0.4, ease: "power3.out" });
+        gsap.to("#metrics-section", { opacity: 1, y: 0, duration: 1.2, delay: 0.6, ease: "power3.out" });
+
+        // Chart.js Configuration
+        const chartCtx = document.getElementById('tempChart').getContext('2d');
+        const labels = Array.from({length: 31}, (_, i) => `Oct ${i + 1}`);
+        const baselineData = [28.5, 28.6, 28.8, 28.9, 29.0, 29.1, 29.2, 29.3, 29.4, 29.5, 29.5, 29.4, 29.3, 29.2, 29.1, 29.0, 28.9, 28.8, 28.7, 28.6, 28.5, 28.4, 28.3, 28.2, 28.1, 28.0, 27.9, 27.8, 27.7, 27.6, 27.5];
+        const currentData = [29.0, 29.4, 30.1, 30.5, 31.0, 31.5, 31.8, 32.2, 32.5, 33.1, 33.5, 33.8, 34.2, 34.5, 34.8, 34.6, 34.2, 33.9, 33.5, 33.2, 33.0, 32.8, 32.5, 32.2, 32.0, 31.8, 31.5, 31.2, 31.0, 30.8, 30.5];
+
+        const tempChart = new Chart(chartCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: 'Current Heat (2026 - Chennai)', data: currentData, borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.15)', borderWidth: 3.5, tension: 0.3, fill: true, pointBackgroundColor: '#bae6fd', pointRadius: 4, pointHoverRadius: 7 },
+                    { label: 'Typical October Heat (10-Year Average)', data: baselineData, borderColor: '#94a3b8', backgroundColor: 'transparent', borderWidth: 2, borderDash: [6, 6], tension: 0.3, pointRadius: 2, pointBackgroundColor: '#94a3b8' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#cbd5e1', font: { family: 'Inter', size: 13, weight: 500 }, usePointStyle: true, pointStyle: 'rectRounded', padding: 20 } },
+                    tooltip: { mode: 'index', intersect: false, backgroundColor: '#0f172a', titleColor: '#f8fafc', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1, callbacks: { label: function(context) { return `${context.dataset.label}: ${context.raw.toFixed(1)}°C`; } } }
+                },
+                scales: {
+                    x: { grid: { color: 'rgba(51, 65, 85, 0.3)' }, ticks: { color: '#94a3b8', font: { weight: 500 }, maxTicksLimit: 11 } },
+                    y: { grid: { color: 'rgba(51, 65, 85, 0.3)' }, ticks: { color: '#f1f5f9', font: { weight: 600 }, callback: function(value) { return value.toFixed(1) + '°C'; } }, min: 26, max: 36, title: { display: true, text: 'Temperature (°C)', color: '#f8fafc', font: { weight: 600 } } }
+                },
+                animation: { duration: 2200, easing: 'easeInOutQuint' }
+            }
+        });
+
+        function updateChart(mode) {
+            if (mode === 'peak') {
+                const peakData = [...currentData];
+                peakData[13] = 36.5; peakData[14] = 37.2; peakData[15] = 36.8;
+                tempChart.data.datasets[0].data = peakData;
+                tempChart.options.scales.y.max = 39;
+                tempChart.update();
+            } else {
+                tempChart.data.datasets[0].data = currentData;
+                tempChart.options.scales.y.max = 36;
+                tempChart.update();
+            }
+        }
+    </script>
+</body>
+</html>
